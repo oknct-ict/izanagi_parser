@@ -15,4 +15,4 @@ IzanagiLexer.java: izanagi.jflex
 .PHONY: clean
 clean:
 	ls |grep -E "Izanagi.*\.java" |xargs rm -f
-	ls |grep -E "Izanagi.*\.class" |xargs rm -f
+	rm -f *.class
