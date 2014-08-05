@@ -1,0 +1,48 @@
+%semantic double
+
+%token NUMBER
+
+%left '+' '-'
+%left '*' '/'
+
+%%
+
+/* -> of BNF is changed to : */
+input		: /* empty */
+			| input line '\n' { }
+			;
+
+line		: /* empty */	{ System.exit(0); }
+			| expr			{ System.out.printf("%g%n", $1); }
+			;
+
+expr		: expr '+' expr		{ $$ = $1 + $3; }
+			| expr '-' expr		{ $$ = $1 - $3; }
+			| expr '*' expr		{ $$ = $1 * $3; }
+			| expr '/' expr		{ $$ = $1 / $3; }
+			| '(' expr ')'		{ $$ = $2; }
+			| NUMBER			{ $$ = $1; }
+			;
+
+%%
+
+IzanagiParser(IzanagiLexer l)
+{
+	lexer = l;
+}
+
+private IzanagiLexer lexer;
+
+private void yyerror(String msg)
+{
+    System.out.println("error : " + msg);
+    System.exit(1);
+}
+
+public static void main(String[] args)
+{
+    CalcLexer lexer = new CalcLexer(System.in);
+    CalcParser calc = new CalcParser(lexer);
+    lexer.nextToken();
+    calc.parse();
+}
