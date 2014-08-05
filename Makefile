@@ -3,6 +3,9 @@ all: izanagi_parser
 izanagi_parser: IzanagiParser.java IzanagiToken.java IzanagiLexer.java
 	javac IzanagiParser.java
 
+test: test.java izanagi_parser
+	javac test.java
+
 IzanagiToken.java: IzanagiParser.java
 IzanagiParser.java: Izanagi.jacc
 	java -jar ./jacc.jar Izanagi.jacc
@@ -14,5 +17,5 @@ IzanagiLexer.java: izanagi.jflex
 
 .PHONY: clean
 clean:
-	rm -f *.java
+	ls |grep -E "Izanagi.*\.java" |xargs rm -f
 	rm -f *.class
