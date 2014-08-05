@@ -40,7 +40,15 @@ import java.io.IOException;
   }
 %}
 
-ws = [ \t\f]
+LineTerminator = \r | \n | \r\n
+InputCharacter = [^\r\n]
+WhiteSpace = {LineTerminator} | [ \t\f]
+
+/* commints */
+Comment = {RemComment} | {EndOfLineComment}
+
+RemComment = "Rem" {InputCharacter}* {LineTerminator}?
+EndOfLineComment = "'" {InputCharacter}* {LineTerminator}?
 
 %%
 
@@ -48,8 +56,7 @@ ws = [ \t\f]
     return ( (int)(yytext().charAt(0)) ); //to charcode
 }
 
-{ws}+			{ }
-\r				{ }
+\r				{ /* ignore */ }
 
 [1-9][0-9]*		{
     yylval = Double.parseDouble(yytext());
@@ -59,6 +66,14 @@ ws = [ \t\f]
 [0-9]*\.[0-9]*	{
     yylval = Double.parseDouble(yytext());
     return (NUMBER);
+}
+
+<YYINITIAL> {
+  /* comments */
+  {Comment}		{ /* ignore */ }
+  
+  /* whitespace */
+  {WhiteSpace}	{ /* ignore */ }
 }
 
 .				{
