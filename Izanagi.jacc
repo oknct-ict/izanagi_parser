@@ -1,5 +1,10 @@
 %semantic double
 
+%token <expression>	INTEGER_LITERAL
+%token <expression>	FLOAT_LITERAL
+%token <expression> STRING_LITERAL
+%token <identifier>	IDENTIFIER
+
 %token NUMBER
 %token DIM
 %token AS
@@ -31,9 +36,6 @@
 %token GE
 %token LT
 %token LE
-%token IDENTIFIER
-%token INTEGER_LITERAL
-%token FLOAT_LITERAL
 
 %left '+' '-'
 %left '*' '/'
