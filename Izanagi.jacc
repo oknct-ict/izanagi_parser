@@ -1,6 +1,23 @@
 %semantic double
 
+%token <expression> INTEGER_LITERAL
+%token <expression> FLOAT_LITERAL
+%token <identifier> IDENTIFIER
+
 %token NUMBER
+
+%token DIM
+%token AS
+%token IF ELSEIF ELSE
+%token SELECT CASE
+%token WHILE END
+%token RETURN BREAK
+
+%token FUNCTION
+
+%token AND OR NOT
+%token EQ NEQ
+%token GT GE LT LE
 
 %left '+' '-'
 %left '*' '/'
