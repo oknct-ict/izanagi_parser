@@ -3,8 +3,10 @@ import java.io.IOException;
 
 %%
 
-%class IzanagiLexer			//name of class that generate by JFlex
-%implements IzanagiTokens	//name of interface
+//name of class that generate by JFlex
+%class IzanagiLexer	
+//name of interface
+%implements IzanagiTokens
 %int
 %unicode
 %line

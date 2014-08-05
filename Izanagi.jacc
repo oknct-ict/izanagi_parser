@@ -41,8 +41,8 @@ private void yyerror(String msg)
 
 public static void main(String[] args)
 {
-    CalcLexer lexer = new CalcLexer(System.in);
-    CalcParser calc = new CalcParser(lexer);
+    IzanagiLexer lexer = new IzanagiLexer(System.in);
+    IzanagiParser calc = new IzanagiParser(lexer);
     lexer.nextToken();
     calc.parse();
 }
