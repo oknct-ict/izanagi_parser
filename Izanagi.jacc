@@ -1,6 +1,39 @@
 %semantic double
 
 %token NUMBER
+%token DIM
+%token AS
+%token IF
+%token ELSEIF
+%token ELSE
+%token SELECT
+%token CASE
+%token WHILE
+%token END
+%token RETURN
+%token BREAK
+
+%token FUNCTION
+
+%token ADD
+%token SUB
+%token MUL
+%token DIV
+%token MOD
+%token ASSIGN
+
+%token AND
+%token OR
+%token NOT
+%token EQ
+%token NEQ
+%token GT
+%token GE
+%token LT
+%token LE
+%token IDENTIFIER
+%token INTEGER_LITERAL
+%token FLOAT_LITERAL
 
 %left '+' '-'
 %left '*' '/'
