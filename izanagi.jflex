@@ -40,25 +40,77 @@ import java.io.IOException;
   }
 %}
 
-ws = [ \t\f]
+LineTerminator = \r | \n | \r\n
+InputCharacter = [^\r\n]
+WhiteSpace = {LineTerminator} | [ \t\f]
+
+/* commints */
+Comment = {RemComment} | {EndOfLineComment}
+
+RemComment = "Rem" {InputCharacter}* {LineTerminator}?
+EndOfLineComment = "'" {InputCharacter}* {LineTerminator}?
 
 %%
 
-[+\-*/()=\n]	{
+<YYINITIAL>"Dim"			{ return (DIM); }
+<YYINITIAL>"As"				{ return (AS); }
+<YYINITIAL>"If"				{ return (IF); }
+<YYINITIAL>"ElseIf"			{ return (ELSEIF); }
+<YYINITIAL>"Else"			{ return (ELSE); }
+<YYINITIAL>"Select"			{ return (SELECT); }
+<YYINITIAL>"Case"			{ return (CASE); }
+<YYINITIAL>"While"			{ return (WHILE); }
+<YYINITIAL>"End"			{ return (END); }
+<YYINITIAL>"Return"			{ return (RETURN); }
+<YYINITIAL>"Break"			{ return (BREAK); }
+
+<YYINITIAL>"Function"		{ return (FUNCTION); }
+
+<YYINITIAL>"+"				{ return (ADD); }
+<YYINITIAL>"-"				{ return (SUB); }
+<YYINITIAL>"*"				{ return (MUL); }
+<YYINITIAL>"/"				{ return (DIV); }
+<YYINITIAL>"%"				{ return (MOD); }
+<YYINITIAL>"="				{ return (ASSIGN); }
+
+<YYINITIAL>"And"			{ return (AND); }
+<YYINITIAL>"Or"				{ return (OR); }
+<YYINITIAL>"Not"			{ return (NOT); }
+<YYINITIAL>"=="				{ return (EQ); }
+<YYINITIAL>"!="				{ return (NEQ); }
+<YYINITIAL>">"				{ return (GT); }
+<YYINITIAL>">="				{ return (GE); }
+<YYINITIAL>"<"				{ return (LT); }
+<YYINITIAL>"<="				{ return (LE); }
+
+<YYINITIAL>[()]			{
     return ( (int)(yytext().charAt(0)) ); //to charcode
 }
 
-{ws}+			{ }
-\r				{ }
-
-[1-9][0-9]*		{
-    yylval = Double.parseDouble(yytext());
-    return (NUMBER);
+<YYINITIAL>[A-Za-z_][A-Za-z_0-9]* {
+    return (IDENTIFIER);
 }
 
-[0-9]*\.[0-9]*	{
+<YYINITIAL>[1-9][0-9]*	{
     yylval = Double.parseDouble(yytext());
-    return (NUMBER);
+    return (INTEGER_LITERAL);
+}
+<YYINITIAL>"0" 			{
+    yylval = Double.parseDouble(yytext());
+    return (INTEGER_LITERAL);
+}
+
+<YYINITIAL>[0-9]*\.[0-9]*	{
+    yylval = Double.parseDouble(yytext());
+    return (FLOAT_LITERAL);
+}
+
+<YYINITIAL> {
+  /* comments */
+  {Comment}		{ /* ignore */ }
+  
+  /* whitespace */
+  {WhiteSpace}	{ /* ignore */ }
 }
 
 .				{
