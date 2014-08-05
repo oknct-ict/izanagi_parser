@@ -15,3 +15,4 @@ IzanagiLexer.java: izanagi.jflex
 .PHONY: clean
 clean:
 	rm -f *.java
+	rm -f *.class
