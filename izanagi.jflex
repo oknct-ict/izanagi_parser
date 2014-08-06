@@ -52,18 +52,16 @@ EndOfLineComment = "'" {InputCharacter}* {LineTerminator}?
 
 %%
 
-[+\-*/()=\n]	{
+<YYINITIAL> [+\-*/()=\n]	{
     return ( (int)(yytext().charAt(0)) ); //to charcode
 }
 
-\r				{ /* ignore */ }
-
-[1-9][0-9]*		{
+<YYINITIAL> [1-9][0-9]*		{
     yylval = Double.parseDouble(yytext());
     return (NUMBER);
 }
 
-[0-9]*\.[0-9]*	{
+<YYINITIAL> [0-9]*\.[0-9]*	{
     yylval = Double.parseDouble(yytext());
     return (NUMBER);
 }
